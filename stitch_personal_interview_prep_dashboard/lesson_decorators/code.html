@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewPrep - Understanding Decorators</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-primary-container": "#00285d",
+                    "tertiary-container": "#df7412",
+                    "on-background": "#e2e2e2",
+                    "secondary": "#c8c6c5",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-error": "#690005",
+                    "on-tertiary": "#502400",
+                    "surface": "#121414",
+                    "on-secondary-container": "#b7b4b4",
+                    "surface-tint": "#adc6ff",
+                    "background": "#121414",
+                    "surface-variant": "#333535",
+                    "on-primary-fixed": "#001a42",
+                    "on-secondary-fixed-variant": "#474746",
+                    "inverse-on-surface": "#2f3131",
+                    "surface-container-highest": "#333535",
+                    "on-surface": "#e2e2e2",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e2e2e2",
+                    "primary-fixed": "#d8e2ff",
+                    "tertiary": "#ffb786",
+                    "on-primary": "#002e6a",
+                    "on-secondary": "#313030",
+                    "surface-container-low": "#1a1c1c",
+                    "primary-container": "#4d8eff",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "surface-container-lowest": "#0c0f0f",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "secondary-fixed": "#e5e2e1",
+                    "outline": "#8c909f",
+                    "surface-dim": "#121414",
+                    "error": "#ffb4ab",
+                    "surface-container": "#1e2020",
+                    "secondary-container": "#474746",
+                    "surface-bright": "#38393a",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-tertiary-fixed": "#311400",
+                    "primary": "#adc6ff",
+                    "error-container": "#93000a",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "on-tertiary-container": "#461f00",
+                    "surface-container-high": "#282a2b",
+                    "on-surface-variant": "#c2c6d6",
+                    "inverse-primary": "#005ac2",
+                    "tertiary-fixed": "#ffdcc6",
+                    "outline-variant": "#424754"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "lg": "24px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "code-block": ["JetBrains Mono"],
+                    "display-lg-mobile": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "code-block": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #e2e2e2;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121414;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+        }
+        .code-syntax-keyword { color: #adc6ff; }
+        .code-syntax-func { color: #ffb786; }
+        .code-syntax-string { color: #8c909f; }
+        .code-syntax-comment { color: #424754; font-style: italic; }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden">
+<!-- Sidebar (Shared Components Navigation) -->
+<aside class="fixed left-0 top-0 h-full overflow-y-auto bg-surface border-r border-outline-variant h-screen w-64 transition-colors duration-200 ease-in-out z-50">
+<div class="p-md mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">InterviewPrep</h1>
+<p class="text-body-sm text-on-surface-variant opacity-70">Technical Mastery</p>
+</div>
+<nav class="flex flex-col">
+<!-- Mapping JSON labels to tabs -->
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-primary font-bold border-r-2 border-primary bg-secondary-container/20" href="#">
+<span class="material-symbols-outlined mr-sm">code</span>
+                Python Core
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">account_tree</span>
+                OOP
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">layers</span>
+                Django
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">api</span>
+                DRF
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">database</span>
+                SQL
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">storage</span>
+                PostgreSQL
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">bolt</span>
+                FastAPI
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">terminal</span>
+                Git
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">laptop_chromebook</span>
+                Linux
+            </a>
+<a class="flex items-center px-md py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">dock</span>
+                Docker
+            </a>
+<div class="mt-xl px-md border-t border-outline-variant pt-md">
+<a class="flex items-center px-sm py-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all duration-200 text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined mr-sm">settings</span>
+                    Settings
+                </a>
+</div>
+</nav>
+</aside>
+<!-- Top Bar (Shared Components) -->
+<header class="fixed top-0 right-0 flex justify-between items-center h-16 px-md ml-64 w-[calc(100%-16rem)] bg-surface border-b border-outline-variant z-40">
+<div class="flex items-center flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-body-sm">search</span>
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg pl-10 pr-4 py-1 text-body-sm focus:outline-none focus:border-primary transition-all" placeholder="Search Python topics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-xl ml-md">
+<!-- Timer Component -->
+<div class="flex items-center gap-xs text-primary bg-primary-container/10 px-sm py-1 rounded-full border border-primary/20">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+<span class="font-code-block text-body-sm font-bold" id="study-timer">24:12</span>
+</div>
+<div class="flex gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 mt-16 h-[calc(100vh-4rem)] flex">
+<!-- Left Column: Lesson List (25%) -->
+<div class="w-1/4 bg-surface-container-low border-r border-outline-variant flex flex-col">
+<div class="p-md border-b border-outline-variant">
+<h3 class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Python Core Module</h3>
+</div>
+<div class="overflow-y-auto flex-1">
+<div class="py-sm">
+<button class="w-full flex items-center px-md py-3 text-left hover:bg-secondary-container/50 transition-colors group">
+<span class="material-symbols-outlined text-body-sm mr-md text-on-surface-variant group-hover:text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-on-surface">Memory Management</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Completed • 12m</span>
+</div>
+</button>
+<button class="w-full flex items-center px-md py-3 text-left hover:bg-secondary-container/50 transition-colors group">
+<span class="material-symbols-outlined text-body-sm mr-md text-on-surface-variant group-hover:text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-on-surface">Iterators & Generators</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Completed • 18m</span>
+</div>
+</button>
+<button class="w-full flex items-center px-md py-3 text-left bg-primary-container/10 border-r-2 border-primary transition-colors">
+<span class="material-symbols-outlined text-body-sm mr-md text-primary">play_circle</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-primary">Understanding Decorators</span>
+<span class="text-[10px] text-primary uppercase">Current Lesson</span>
+</div>
+</button>
+<button class="w-full flex items-center px-md py-3 text-left hover:bg-secondary-container/50 transition-colors group">
+<span class="material-symbols-outlined text-body-sm mr-md text-outline group-hover:text-on-surface">radio_button_unchecked</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-on-surface-variant">Context Managers</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Next • 15m</span>
+</div>
+</button>
+<button class="w-full flex items-center px-md py-3 text-left hover:bg-secondary-container/50 transition-colors group">
+<span class="material-symbols-outlined text-body-sm mr-md text-outline group-hover:text-on-surface">radio_button_unchecked</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-on-surface-variant">Metaclasses Deep Dive</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Advanced • 25m</span>
+</div>
+</button>
+<button class="w-full flex items-center px-md py-3 text-left hover:bg-secondary-container/50 transition-colors group">
+<span class="material-symbols-outlined text-body-sm mr-md text-outline group-hover:text-on-surface">radio_button_unchecked</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-bold text-on-surface-variant">Global Interpreter Lock</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Performance • 20m</span>
+</div>
+</button>
+</div>
+</div>
+<div class="p-md bg-surface-container-high border-t border-outline-variant">
+<div class="flex items-center justify-between mb-xs">
+<span class="text-[11px] font-label-caps uppercase text-on-surface-variant">Progress</span>
+<span class="text-[11px] font-label-caps text-primary">42%</span>
+</div>
+<div class="h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%]"></div>
+</div>
+</div>
+</div>
+<!-- Right Column: Content (75%) -->
+<div class="flex-1 overflow-y-auto bg-background">
+<div class="max-w-4xl mx-auto px-xl py-xl">
+<!-- Content Header -->
+<div class="mb-xl">
+<div class="flex items-center gap-sm mb-base">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-sm border border-primary/20">INTERMEDIATE</span>
+<span class="text-on-surface-variant text-body-sm">• 15 min read</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-md">Understanding Decorators</h2>
+<p class="text-on-surface-variant leading-relaxed mb-md">
+                        In Python, a decorator is a design pattern that allows a user to add new functionality to an existing object without modifying its structure. Decorators are usually called before the definition of a function you want to decorate.
+                    </p>
+</div>
+<!-- Bento Style Key Concepts -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-xl">
+<div class="bg-surface-container border border-outline-variant p-md rounded-lg">
+<div class="flex items-center gap-sm mb-sm text-primary">
+<span class="material-symbols-outlined">functions</span>
+<span class="font-bold text-body-sm">First-Class Citizens</span>
+</div>
+<p class="text-body-sm text-on-surface-variant">Functions in Python are objects; they can be passed as arguments, returned from other functions, and assigned to variables.</p>
+</div>
+<div class="bg-surface-container border border-outline-variant p-md rounded-lg">
+<div class="flex items-center gap-sm mb-sm text-tertiary">
+<span class="material-symbols-outlined">data_object</span>
+<span class="font-bold text-body-sm">Closure Support</span>
+</div>
+<p class="text-body-sm text-on-surface-variant">Decorators leverage closures to "remember" the function they are wrapping and the scope in which they were created.</p>
+</div>
+</div>
+<!-- Detailed Content -->
+<div class="space-y-md mb-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface">The Basic Syntax</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Think of a decorator as a wrapper. It takes a function, performs some action before and after that function is executed, and then returns the original or a modified version of that function. The <code class="bg-surface-container border border-outline-variant px-1 rounded text-primary font-code-block text-[13px]">@decorator_name</code> syntax is simply syntactic sugar for <code class="bg-surface-container border border-outline-variant px-1 rounded text-on-surface font-code-block text-[13px]">func = decorator(func)</code>.
+                    </p>
+</div>
+<!-- Code Block -->
+<div class="relative group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden mb-xl">
+<div class="flex items-center justify-between px-md py-2 border-b border-outline-variant bg-surface-container">
+<div class="flex items-center gap-base">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary/40"></div>
+<div class="w-3 h-3 rounded-full bg-primary/40"></div>
+<span class="ml-sm font-code-block text-[12px] text-on-surface-variant">timer_decorator.py</span>
+</div>
+<button class="flex items-center gap-xs text-[12px] text-on-surface-variant hover:text-primary transition-colors" id="copy-btn">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Copy</span>
+</button>
+</div>
+<div class="p-md font-code-block text-code-block leading-relaxed overflow-x-auto">
+<pre><code><span class="code-syntax-keyword">import</span> time
+
+<span class="code-syntax-keyword">def</span> <span class="code-syntax-func">timer</span>(func):
+    <span class="code-syntax-comment">"""A decorator that prints the execution time."""</span>
+    <span class="code-syntax-keyword">def</span> <span class="code-syntax-func">wrapper</span>(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f<span class="code-syntax-string">"{func.__name__} took {end_time - start_time:.4f}s"</span>)
+        <span class="code-syntax-keyword">return</span> result
+    <span class="code-syntax-keyword">return</span> wrapper
+
+<span class="code-syntax-keyword">@timer</span>
+<span class="code-syntax-keyword">def</span> <span class="code-syntax-func">complex_calculation</span>():
+    <span class="code-syntax-comment"># Simulate heavy workload</span>
+    time.sleep(<span class="code-syntax-string">1</span>)
+    <span class="code-syntax-keyword">return</span> <span class="code-syntax-string">"Success"</span>
+
+complex_calculation()</code></pre>
+</div>
+</div>
+<div class="bg-surface-container-high border border-outline-variant p-lg rounded-xl mb-xl">
+<h4 class="font-bold text-on-surface mb-sm">Why use decorators?</h4>
+<ul class="space-y-sm text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">bolt</span>
+<span><strong>DRY Principle:</strong> Avoid code duplication for logging, caching, and authentication.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">bolt</span>
+<span><strong>Separation of Concerns:</strong> Keep business logic clean and separate from metadata tasks.</span>
+</li>
+<li class="flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">bolt</span>
+<span><strong>Extensibility:</strong> Easily add functionality to third-party library functions.</span>
+</li>
+</ul>
+</div>
+<!-- Footer Actions -->
+<div class="flex items-center justify-between pt-xl border-t border-outline-variant">
+<button class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface transition-all">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-bold">Iterators</span>
+</button>
+<button class="bg-primary text-on-primary-container px-xl py-3 rounded-lg font-bold flex items-center gap-sm hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-primary/10">
+<span>Next Lesson: Context Managers</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions and Timer
+        let seconds = 1452; // 24:12
+        const timerElement = document.getElementById('study-timer');
+        
+        setInterval(() => {
+            seconds++;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerElement.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        // Simple Copy Logic
+        const copyBtn = document.getElementById('copy-btn');
+        copyBtn.addEventListener('click', () => {
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = `
+                <span class="material-symbols-outlined text-[16px] text-primary">done</span>
+                <span class="text-primary">Copied!</span>
+            `;
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+            }, 2000);
+        });
+
+        // Hover effect for side nav
+        const navLinks = document.querySelectorAll('aside nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if(!link.classList.contains('text-primary')) {
+                    link.style.paddingLeft = '20px';
+                }
+            });
+            link.addEventListener('mouseleave', () => {
+                if(!link.classList.contains('text-primary')) {
+                    link.style.paddingLeft = '';
+                }
+            });
+        });
+    </script>
+</body></html>

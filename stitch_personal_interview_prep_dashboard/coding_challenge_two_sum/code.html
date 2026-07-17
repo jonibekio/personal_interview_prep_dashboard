@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewPrep | Coding Challenge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-primary-container": "#00285d",
+                    "tertiary-container": "#df7412",
+                    "on-background": "#e2e2e2",
+                    "secondary": "#c8c6c5",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-error": "#690005",
+                    "on-tertiary": "#502400",
+                    "surface": "#121414",
+                    "on-secondary-container": "#b7b4b4",
+                    "surface-tint": "#adc6ff",
+                    "background": "#121414",
+                    "surface-variant": "#333535",
+                    "on-primary-fixed": "#001a42",
+                    "on-secondary-fixed-variant": "#474746",
+                    "inverse-on-surface": "#2f3131",
+                    "surface-container-highest": "#333535",
+                    "on-surface": "#e2e2e2",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e2e2e2",
+                    "primary-fixed": "#d8e2ff",
+                    "tertiary": "#ffb786",
+                    "on-primary": "#002e6a",
+                    "on-secondary": "#313030",
+                    "surface-container-low": "#1a1c1c",
+                    "primary-container": "#4d8eff",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "surface-container-lowest": "#0c0f0f",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "secondary-fixed": "#e5e2e1",
+                    "outline": "#8c909f",
+                    "surface-dim": "#121414",
+                    "error": "#ffb4ab",
+                    "surface-container": "#1e2020",
+                    "secondary-container": "#474746",
+                    "surface-bright": "#38393a",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-tertiary-fixed": "#311400",
+                    "primary": "#adc6ff",
+                    "error-container": "#93000a",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "on-tertiary-container": "#461f00",
+                    "surface-container-high": "#282a2b",
+                    "on-surface-variant": "#c2c6d6",
+                    "inverse-primary": "#005ac2",
+                    "tertiary-fixed": "#ffdcc6",
+                    "outline-variant": "#424754"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "lg": "24px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "margin-desktop": "32px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "code-block": ["JetBrains Mono"],
+                    "display-lg-mobile": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "code-block": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0a;
+            color: #e2e2e2;
+            overflow: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for minimalist feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121414;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #424754;
+        }
+        .code-textarea {
+            resize: none;
+            background: transparent;
+            outline: none;
+            border: none;
+            width: 100%;
+            height: 100%;
+            caret-color: #adc6ff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md h-screen flex flex-col">
+<!-- TopNavBar Implementation from JSON -->
+<header class="bg-surface text-primary font-body-md flex justify-between items-center h-16 px-md ml-64 w-[calc(100%-16rem)] border-b border-outline-variant fixed top-0 z-50">
+<div class="flex items-center gap-md">
+<span class="text-on-surface font-headline-md font-bold">Two Sum</span>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-sm text-on-surface-variant font-label-caps">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+<span id="timer-display">12:45</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="flex gap-sm">
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all duration-200">
+<span class="material-symbols-outlined">timer</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all duration-200">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-primary transition-all duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar Implementation from JSON -->
+<aside class="bg-surface text-primary font-body-sm h-screen w-64 border-r border-outline-variant fixed left-0 top-0 h-full overflow-y-auto flex flex-col z-50">
+<div class="p-md flex items-center gap-sm">
+<div class="w-8 h-8 bg-primary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container">code</span>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-on-surface">InterviewPrep</span>
+</div>
+<nav class="mt-md flex-1">
+<div class="px-sm mb-base text-on-tertiary-fixed-variant font-label-caps opacity-50 px-md">Curriculum</div>
+<!-- Dashboard (Inactive) -->
+<a class="flex items-center gap-sm px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Coding Challenges (Active mapping logic) -->
+<a class="flex items-center gap-sm px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-primary font-bold border-r-2 border-primary" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span>Coding Challenges</span>
+</a>
+<!-- Other items -->
+<a class="flex items-center gap-sm px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined">layers</span>
+<span>Django</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined">api</span>
+<span>DRF</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined">database</span>
+<span>PostgreSQL</span>
+</a>
+<a class="flex items-center gap-sm px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span>Linux</span>
+</a>
+</nav>
+<div class="p-md mt-auto border-t border-outline-variant flex items-center gap-sm">
+<img class="w-8 h-8 rounded-full bg-surface-variant" data-alt="A high-quality professional studio portrait of a software engineer in a dark tech-focused environment, dramatic low-key lighting highlighting sharp features, wearing a dark minimal turtleneck, set against a background of blurred lines of code. Deep shadows and metallic textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWvQsw8EutmkoyOs2acx9dXHMSn1Xd54pX43gpmmYvkUekWv62xHdey6qvkEpKFO8MlYC3DEiOi-KFeVEKS4kmBK8XtVjNakdzoGr58K-8R9sDpqrFmSF7l1Z8WpfE9kQn5SCpq2QtCLpDYo44n2OtIp_HRgk4nfWEWb6B0lYxvVMJDGLMyeG6k6B4CKJm17vwZON-44FGoAzMHmoqs300Pxz0iW0hdr_fsPZZrFwHO3Fzt5FrtfMuMg"/>
+<div class="flex flex-col">
+<span class="font-body-sm font-bold text-on-surface">Alex Chen</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Senior Dev</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 mt-16 flex flex-col md:flex-row overflow-hidden">
+<!-- Left Side: Problem Description -->
+<section class="flex-1 min-w-0 border-r border-outline-variant overflow-y-auto bg-surface-container-lowest flex flex-col">
+<div class="flex border-b border-outline-variant bg-surface-container-low">
+<button class="px-md py-sm text-primary font-bold border-b-2 border-primary font-body-sm">Description</button>
+<button class="px-md py-sm text-on-surface-variant hover:text-on-surface font-body-sm">Solutions</button>
+<button class="px-md py-sm text-on-surface-variant hover:text-on-surface font-body-sm">Submissions</button>
+</div>
+<div class="p-xl space-y-lg">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-sm">1. Two Sum</h1>
+<div class="flex gap-sm">
+<span class="px-sm py-[2px] bg-emerald-950/30 text-emerald-400 rounded-sm font-label-caps text-[10px]">EASY</span>
+<span class="px-sm py-[2px] bg-secondary-container text-on-secondary-container rounded-sm font-label-caps text-[10px]">ARRAY</span>
+<span class="px-sm py-[2px] bg-secondary-container text-on-secondary-container rounded-sm font-label-caps text-[10px]">HASH TABLE</span>
+</div>
+</div>
+<div class="prose prose-invert max-w-none font-body-md text-on-surface-variant leading-relaxed">
+<p>Given an array of integers <code class="bg-surface-variant px-1 rounded text-primary">nums</code> and an integer <code class="bg-surface-variant px-1 rounded text-primary">target</code>, return indices of the two numbers such that they add up to <code class="bg-surface-variant px-1 rounded text-primary">target</code>.</p>
+<p>You may assume that each input would have <strong>exactly one solution</strong>, and you may not use the same element twice.</p>
+<p>You can return the answer in any order.</p>
+</div>
+<div class="space-y-md">
+<div class="space-y-sm">
+<span class="font-label-caps text-on-surface">Example 1:</span>
+<pre class="bg-surface-variant/30 border border-outline-variant p-md rounded font-code-block text-code-block"><span class="text-on-surface-variant">Input:</span> nums = [2,7,11,15], target = 9
+<span class="text-on-surface-variant">Output:</span> [0,1]
+<span class="text-on-surface-variant">Explanation:</span> Because nums[0] + nums[1] == 9, we return [0, 1].</pre>
+</div>
+<div class="space-y-sm">
+<span class="font-label-caps text-on-surface">Example 2:</span>
+<pre class="bg-surface-variant/30 border border-outline-variant p-md rounded font-code-block text-code-block"><span class="text-on-surface-variant">Input:</span> nums = [3,2,4], target = 6
+<span class="text-on-surface-variant">Output:</span> [1,2]</pre>
+</div>
+</div>
+<div class="pt-lg border-t border-outline-variant space-y-sm">
+<span class="font-label-caps text-on-surface">Constraints:</span>
+<ul class="list-disc pl-md text-on-surface-variant font-code-block text-[13px] space-y-xs">
+<li>2 <= nums.length <= 10<sup>4</sup></li>
+<li>-10<sup>9</sup> <= nums[i] <= 10<sup>9</sup></li>
+<li>-10<sup>9</sup> <= target <= 10<sup>9</sup></li>
+<li class="text-primary-fixed-dim">Only one valid answer exists.</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Right Side: Code Editor Area -->
+<section class="flex-[1.2] flex flex-col overflow-hidden">
+<!-- Toolbar -->
+<div class="h-10 border-b border-outline-variant flex items-center justify-between px-md bg-surface-container">
+<div class="flex items-center gap-sm">
+<div class="flex items-center gap-xs bg-surface-variant px-sm py-1 rounded cursor-pointer hover:bg-secondary-container transition-colors">
+<span class="text-[12px] font-bold text-on-surface">Python3</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</div>
+</div>
+<div class="flex gap-sm">
+<button class="p-xs text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[20px]">settings_suggest</span>
+</button>
+</div>
+</div>
+<!-- Code Input -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Line numbers gutter -->
+<div class="w-12 bg-surface-container-lowest border-r border-outline-variant flex flex-col items-center py-md font-code-block text-outline opacity-40 text-[12px] select-none">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+</div>
+<!-- Editor -->
+<div class="flex-1 p-md relative bg-surface-container-lowest">
+<textarea class="code-textarea" id="editor" spellcheck="false">class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        # Your code here
+        hash_map = {}
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in hash_map:
+                return [hash_map[diff], i]
+            hash_map[n] = i</textarea>
+</div>
+</div>
+<!-- Console / Result Area -->
+<div class="h-64 border-t border-outline-variant flex flex-col bg-surface-container-lowest">
+<div class="flex border-b border-outline-variant bg-surface-container-low px-md justify-between items-center h-10">
+<div class="flex items-center gap-md">
+<button class="text-primary font-bold text-label-caps border-b-2 border-primary py-2">Testcase</button>
+<button class="text-on-surface-variant text-label-caps py-2 hover:text-on-surface">Result</button>
+</div>
+<div class="flex items-center text-on-surface-variant gap-xs">
+<span class="text-[11px] font-label-caps">Status:</span>
+<span class="text-[11px] text-emerald-400 font-bold uppercase tracking-wider">Ready to run</span>
+</div>
+</div>
+<div class="flex-1 p-md font-code-block text-[13px] overflow-y-auto">
+<div class="space-y-md">
+<div class="flex flex-col gap-xs">
+<span class="text-on-surface-variant font-label-caps text-[10px]">nums =</span>
+<div class="bg-surface-variant px-md py-sm rounded-sm text-on-surface">[2,7,11,15]</div>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="text-on-surface-variant font-label-caps text-[10px]">target =</span>
+<div class="bg-surface-variant px-md py-sm rounded-sm text-on-surface">9</div>
+</div>
+</div>
+</div>
+<!-- Controls -->
+<div class="h-12 border-t border-outline-variant flex items-center justify-between px-md bg-surface-container">
+<button class="text-on-surface-variant hover:text-on-surface flex items-center gap-xs font-label-caps">
+<span class="material-symbols-outlined text-[18px]">keyboard_arrow_up</span>
+                        Console
+                    </button>
+<div class="flex gap-md">
+<button class="px-xl py-xs bg-secondary-container text-on-secondary-container rounded font-bold font-label-caps hover:bg-outline-variant transition-colors border border-outline-variant">Run</button>
+<button class="px-xl py-xs bg-primary-container text-on-primary-container rounded font-bold font-label-caps hover:brightness-110 transition-all">Submit</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Simple timer logic
+        let seconds = 765; // 12:45
+        const timerDisplay = document.getElementById('timer-display');
+        
+        setInterval(() => {
+            seconds++;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        // Simple Editor Tab support
+        const editor = document.getElementById('editor');
+        editor.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = editor.selectionStart;
+                const end = editor.selectionEnd;
+                editor.value = editor.value.substring(0, start) + "    " + editor.value.substring(end);
+                editor.selectionStart = editor.selectionEnd = start + 4;
+            }
+        });
+    </script>
+</body></html>

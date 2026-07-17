@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewPrep | Python Core</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-primary-container": "#00285d",
+                        "tertiary-container": "#df7412",
+                        "on-background": "#e2e2e2",
+                        "secondary": "#c8c6c5",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-error": "#690005",
+                        "on-tertiary": "#502400",
+                        "surface": "#121414",
+                        "on-secondary-container": "#b7b4b4",
+                        "surface-tint": "#adc6ff",
+                        "background": "#121414",
+                        "surface-variant": "#333535",
+                        "on-primary-fixed": "#001a42",
+                        "on-secondary-fixed-variant": "#474746",
+                        "inverse-on-surface": "#2f3131",
+                        "surface-container-highest": "#333535",
+                        "on-surface": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e2e2e2",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary": "#ffb786",
+                        "on-primary": "#002e6a",
+                        "on-secondary": "#313030",
+                        "surface-container-low": "#1a1c1c",
+                        "primary-container": "#4d8eff",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "surface-container-lowest": "#0c0f0f",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "secondary-fixed": "#e5e2e1",
+                        "outline": "#8c909f",
+                        "surface-dim": "#121414",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1e2020",
+                        "secondary-container": "#474746",
+                        "surface-bright": "#38393a",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-tertiary-fixed": "#311400",
+                        "primary": "#adc6ff",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-tertiary-container": "#461f00",
+                        "surface-container-high": "#282a2b",
+                        "on-surface-variant": "#c2c6d6",
+                        "inverse-primary": "#005ac2",
+                        "tertiary-fixed": "#ffdcc6",
+                        "outline-variant": "#424754"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "margin-desktop": "32px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "code-block": ["JetBrains Mono"],
+                        "display-lg-mobile": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "code-block": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0a;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #121414;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #262626;
+        }
+        .glass-panel {
+            background: rgba(23, 23, 23, 0.7);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-hidden">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="fixed left-0 top-0 h-full overflow-y-auto w-64 border-r border-outline-variant bg-surface dark:bg-surface custom-scrollbar z-50">
+<div class="p-lg flex items-center gap-sm">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">InterviewPrep</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Technical Mastery</p>
+</div>
+</div>
+<nav class="mt-md px-sm pb-xl">
+<!-- Navigation Items Mapping -->
+<div class="space-y-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Python Core (ACTIVE) -->
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-primary font-bold border-r-2 border-primary" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="code">code</span>
+<span>Python Core</span>
+</a>
+<!-- Rest of items as per JSON... -->
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_tree">account_tree</span>
+<span>OOP</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="layers">layers</span>
+<span>Django</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="api">api</span>
+<span>DRF</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="database">database</span>
+<span>SQL</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="storage">storage</span>
+<span>PostgreSQL</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="bolt">bolt</span>
+<span>FastAPI</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="terminal">terminal</span>
+<span>Git</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="laptop_chromebook">laptop_chromebook</span>
+<span>Linux</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dock">dock</span>
+<span>Docker</span>
+</a>
+<div class="py-md border-t border-outline-variant/30 mt-md"></div>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="quiz">quiz</span>
+<span>Quiz</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm transition-colors duration-200 ease-in-out hover:bg-secondary-container hover:text-on-secondary-container text-on-surface-variant font-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- TopNavBar (Authority Source: JSON) -->
+<header class="fixed top-0 right-0 h-16 px-md ml-64 w-[calc(100%-16rem)] flex justify-between items-center bg-surface dark:bg-surface border-b border-outline-variant z-40 transition-all duration-200">
+<div class="flex items-center gap-md flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface font-body-sm px-10 py-1.5 focus:outline-none focus:border-primary transition-all" placeholder="Search Python modules..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm bg-surface-container-low px-sm py-1 border border-outline-variant rounded-full">
+<span class="material-symbols-outlined text-primary text-[18px]">timer</span>
+<span class="text-on-surface-variant font-label-caps text-[12px] uppercase">45:00m Session</span>
+</div>
+<div class="flex items-center gap-md border-l border-outline-variant pl-lg">
+<button class="text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[24px]">account_circle</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-lg h-[calc(100vh-4rem)] overflow-y-auto custom-scrollbar bg-background">
+<!-- Category Header -->
+<div class="relative mb-xl rounded-xl overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 opacity-30" data-alt="A professional dark-themed digital illustration representing Python core programming, featuring stylized lines of code, glowing Python logo, and abstract data structures. The lighting is low-key with neon blue highlights, reflecting a high-performance technical environment for software engineers." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD2pObPHAML1hzXifVHBjOJA-c-IXJ8tGx67lya-5F7nO9kltVQT6qvm3xHfx7JycU3V-XKSjlAlJqns4xd3uOiebsliALfhhOXCZm0qB10u22HVAxIID4SwqW3Vve0hqf8KCmSOw_fCCRgh1OeO4uOsl5wJgk6Gjo5iU5AdvyDMRxOKAHnzrY-mOF68Gno2ZRMklFWj8Ts2IpbT5emKPVO3McfzUlVV55reYdnRz68ZpEU7Onm-oTohA')"></div>
+<div class="relative z-10 p-xl bg-gradient-to-r from-background via-background/80 to-transparent">
+<div class="flex items-center gap-sm mb-sm">
+<span class="px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 font-label-caps rounded text-[10px] uppercase">Core Mastery</span>
+<span class="text-on-surface-variant font-label-caps text-[12px]">24 MODULES</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-xs">Python Core</h2>
+<p class="text-on-surface-variant max-w-xl font-body-md">Master the fundamental principles of Python, from basic syntax and data types to advanced decorators and memory management.</p>
+<!-- Progress Indicator -->
+<div class="mt-lg flex items-center gap-lg">
+<div class="flex-1 max-w-xs">
+<div class="flex justify-between mb-2">
+<span class="text-on-surface font-label-caps text-[11px] uppercase">Curriculum Progress</span>
+<span class="text-primary font-label-caps text-[11px]">65%</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] shadow-[0_0_8px_rgba(173,198,255,0.5)]"></div>
+</div>
+</div>
+<button class="bg-primary text-on-primary-container px-lg py-2.5 font-label-caps text-[12px] uppercase font-bold hover:brightness-110 transition-all rounded">Continue Learning</button>
+</div>
+</div>
+</div>
+<!-- Section Navigation Tabs -->
+<div class="flex gap-xl border-b border-outline-variant mb-lg">
+<button class="pb-md px-2 text-primary border-b-2 border-primary font-bold font-body-sm transition-all">Lessons</button>
+<button class="pb-md px-2 text-on-surface-variant hover:text-on-surface font-body-sm transition-all">Interview Questions</button>
+<button class="pb-md px-2 text-on-surface-variant hover:text-on-surface font-body-sm transition-all">Quiz</button>
+<button class="pb-md px-2 text-on-surface-variant hover:text-on-surface font-body-sm transition-all">Coding Challenges</button>
+</div>
+<!-- Content Grid -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- Left Pane: Modules List -->
+<div class="col-span-12 lg:col-span-8 space-y-base">
+<!-- Module Item 1: Variables -->
+<div class="flex items-center justify-between p-md bg-surface-container border border-outline-variant hover:bg-secondary-container/50 transition-all cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h4 class="text-on-surface font-headline-md text-body-md font-bold">Variables &amp; Data Types</h4>
+<p class="text-on-surface-variant text-[12px]">Mutables vs Immutables, Type Hinting, Scope</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant font-label-caps text-[11px] uppercase tracking-wider">Completed</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+</div>
+<!-- Module Item 2: Control Flow -->
+<div class="flex items-center justify-between p-md bg-surface-container border border-outline-variant hover:bg-secondary-container/50 transition-all cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<h4 class="text-on-surface font-headline-md text-body-md font-bold">Control Flow</h4>
+<p class="text-on-surface-variant text-[12px]">Iterators, Generators, Context Managers</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant font-label-caps text-[11px] uppercase tracking-wider">Completed</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+</div>
+<!-- Module Item 3: Functions (In Progress) -->
+<div class="flex items-center justify-between p-md bg-surface-container border border-primary/60 hover:bg-secondary-container/50 transition-all cursor-pointer group ring-1 ring-primary/20">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full border border-primary flex items-center justify-center bg-primary text-on-primary-container">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</div>
+<div>
+<h4 class="text-primary font-headline-md text-body-md font-bold">Functions</h4>
+<p class="text-on-surface-variant text-[12px]">Args &amp; Kwargs, Lambda, First-class objects</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-primary font-label-caps text-[11px] uppercase tracking-wider font-bold">In Progress</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+<!-- Module Item 4: Decorators -->
+<div class="flex items-center justify-between p-md bg-surface-container border border-outline-variant hover:bg-secondary-container/50 transition-all cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<div>
+<h4 class="text-on-surface-variant font-headline-md text-body-md font-bold">Decorators</h4>
+<p class="text-on-surface-variant/60 text-[12px]">Wrappers, Closure, Memoization</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant/60 font-label-caps text-[11px] uppercase tracking-wider">Locked</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+</div>
+<!-- Module Item 5: List Comprehensions -->
+<div class="flex items-center justify-between p-md bg-surface-container border border-outline-variant hover:bg-secondary-container/50 transition-all cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<div>
+<h4 class="text-on-surface-variant font-headline-md text-body-md font-bold">List Comprehensions</h4>
+<p class="text-on-surface-variant/60 text-[12px]">Efficiency, Dictionary Comprehension, Nested loops</p>
+</div>
+</div>
+<div class="flex items-center gap-xl">
+<span class="text-on-surface-variant/60 font-label-caps text-[11px] uppercase tracking-wider">Locked</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Right Pane: Roadmap & Meta -->
+<div class="col-span-12 lg:col-span-4 space-y-lg">
+<!-- Roadmap Card -->
+<div class="p-md bg-surface-container border border-outline-variant">
+<h5 class="text-on-surface font-label-caps text-[11px] uppercase mb-md border-b border-outline-variant pb-xs">Roadmap Progress</h5>
+<div class="relative pl-sm">
+<div class="absolute left-[7.5px] top-2 bottom-2 w-0.5 bg-outline-variant"></div>
+<div class="relative flex items-start gap-md mb-lg last:mb-0">
+<div class="w-4 h-4 rounded-full bg-primary z-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-on-primary-container font-bold">check</span>
+</div>
+<div>
+<p class="text-on-surface font-bold text-[13px]">Basics &amp; Syntax</p>
+<p class="text-on-surface-variant text-[11px]">Completed on Oct 12</p>
+</div>
+</div>
+<div class="relative flex items-start gap-md mb-lg last:mb-0">
+<div class="w-4 h-4 rounded-full bg-primary z-10 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-on-primary-container animate-pulse"></div>
+</div>
+<div>
+<p class="text-primary font-bold text-[13px]">Core Fundamentals</p>
+<p class="text-on-surface-variant text-[11px]">Module 3 of 8 active</p>
+</div>
+</div>
+<div class="relative flex items-start gap-md mb-lg last:mb-0">
+<div class="w-4 h-4 rounded-full bg-surface-container-highest border border-outline-variant z-10"></div>
+<div>
+<p class="text-on-surface-variant font-bold text-[13px]">Advanced Concepts</p>
+<p class="text-on-surface-variant/50 text-[11px]">Pending prerequisite</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Coding Challenge Card -->
+<div class="relative p-md border border-outline-variant overflow-hidden group cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-tertiary font-label-caps text-[10px] border border-tertiary/30 px-2 rounded">HOT CHALLENGE</span>
+<span class="material-symbols-outlined text-primary">psychology</span>
+</div>
+<h6 class="text-on-surface font-bold mb-1">LRU Cache Implementation</h6>
+<p class="text-on-surface-variant text-[12px] mb-md">Design a data structure for Least Recently Used (LRU) cache.</p>
+<div class="flex items-center gap-sm">
+<span class="text-[11px] text-on-surface-variant bg-surface-container-highest px-2 py-0.5 rounded">Medium</span>
+<span class="text-[11px] text-on-surface-variant bg-surface-container-highest px-2 py-0.5 rounded">350 Points</span>
+</div>
+</div>
+</div>
+<!-- Tech News/Insight -->
+<div class="p-md border border-outline-variant bg-surface-container-low italic text-on-surface-variant text-[12px]">
+<p>"Python 3.12 introduces more efficient memory usage for small integers and improved error messages for missing imports."</p>
+<p class="mt-2 text-right not-italic font-label-caps text-[10px] opacity-50">— LATEST UPDATES</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button (FAB) - Mandatory Suppression on Detail/Category screens logic but rendered if specifically relevant -->
+<!-- Suppressed for this category page layout as per prompt "Minimalist list layout" focus -->
+<script>
+        // Simple Micro-interaction for hover states and active tab handling
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.parentElement.classList.contains('flex-gap-xl')) {
+                    document.querySelectorAll('.flex-gap-xl button').forEach(b => {
+                        b.classList.remove('text-primary', 'border-b-2', 'border-primary', 'font-bold');
+                        b.classList.add('text-on-surface-variant');
+                    });
+                    this.classList.add('text-primary', 'border-b-2', 'border-primary', 'font-bold');
+                    this.classList.remove('text-on-surface-variant');
+                }
+            });
+        });
+    </script>
+</body></html>
